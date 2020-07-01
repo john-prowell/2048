@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const width = 4;
   let squares = [];
   let score = 0;
+  let isMovable = true;
 
   // create a playing board
 
@@ -226,15 +227,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function checkForLose() {
-    let zeros = 0;
-    for (let i = 0; i < squares.length; i++) {
-      if (squares[i].innerHTML == 0) {
-        zeros++;
-      }
-    }
-    if (zeros === 0) {
+    // let zeros = 0;
+    // for (let i = 0; i < squares.length; i++) {
+    //   if (squares[i].innerHTML == 0) {
+    //     zeros++;
+    //   }
+    // }
+    // if (zeros === 0) {
+    //   resultDisplay.innerHTML = 'You Pooped It';
+    //   document.removeEventListener('keyup', control);
+    // }
+
+    checkMovable();
+    console.log(isMovable);
+
+    if (!isMovable) {
       resultDisplay.innerHTML = 'You Pooped It';
       document.removeEventListener('keyup', control);
+    }
+  }
+
+  function checkMovable() {
+    // Check if rows can combine
+    for (let i = 0; i < 15; i++) {
+      if (!squares[i].innerHTML === squares[i + 1].innerHTML) {
+        isMovable = false;
+      }
+    }
+
+    // Check if columns can combine
+    for (let i = 0; i < 12; i++) {
+      if (!squares[i].innerHTML === squares[i + width].innerHTML) {
+        isMovable = false;
+      }
     }
   }
 });
